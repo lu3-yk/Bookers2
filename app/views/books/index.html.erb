@@ -27,7 +27,7 @@
  </thead>
  <tbody>
 <% @books.each do |book| %>
-    <tr>
+   <tr>
      <td>
         <%= link_to user_path(book.user.id) do %>
          <%= image_tag book.user.get_profile_image(100,100) %>
@@ -41,8 +41,21 @@
      <td>
          <%= book.body %>
      </td>
-    </tr>
+     <td>
+         <% if book.favorited?(current_user,book) %>
+            <!--# 一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ-->
+            <%= link_to book_favorites_path(book), method: :delete do %>
+                <span style="color:red;">♥︎</span>
+            <% end %>
+        <% else %>
+            <!--# 一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ-->
+            <%= link_to book_favorites_path(book), method: :post do %>
+                <span>♡︎</span>
+            <% end %>
+        <% end %>
  <% end %>
+    </td>
+   </tr>
  </tbody>
 </table>
     
