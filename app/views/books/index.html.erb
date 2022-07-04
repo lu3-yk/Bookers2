@@ -9,55 +9,45 @@
     
 
 <div class="container px-5 px-sm-0">
-<div class= "row">
-<div class="col-md-3">
-<%= render 'users/user_info',user:@user %>
-<%= render 'book_form',book:@book %>
-</div>
-<div class="col-md-8 offset-md-1">
-    <h2>Books</h2>
+  <div class= "row">
+      <div class="col-md-3">
+        <%= render 'users/user_info',user:@user %>
+        <%= render 'book_form',book:@book %>
+      </div>
+      <div class="col-md-8 offset-md-1">
+        <h2>Books</h2>
 
- <table class="table">
- <thead>
-    <tr>
-     <th>&nbsp;</th>
-     <th>Title</th>
-     <th>Opinion</th>
-    </tr>
- </thead>
- <tbody>
-<% @books.each do |book| %>
-   <tr>
-     <td>
-        <%= link_to user_path(book.user.id) do %>
-         <%= image_tag book.user.get_profile_image(100,100) %>
-        <% end %>
-     </td>
-     <td>
-         <%= link_to book_path(book.id) do %>
-          <%= book.title %>
+        <table class="table">
+         <thead>
+            <tr>
+             <th>&nbsp;</th>
+             <th>Title</th>
+             <th>Opinion</th>
+            </tr>
+         </thead>
+         <tbody>
+        <% @books.each do |book| %>
+           <tr>
+             <td>
+                <%= link_to user_path(book.user.id) do %>
+                 <%= image_tag book.user.get_profile_image(100,100) %>
+                <% end %>
+             </td>
+             <td>
+                 <%= link_to book_path(book.id) do %>
+                  <%= book.title %>
+                 <% end %>
+             </td>
+             <td>
+                 <%= book.body %>
+             </td>
+             <td class=<%="favorites-btn-" + book.id.to_s %>><%= render "favorites/favorites", book: book %></td>
+                 
+                 
          <% end %>
-     </td>
-     <td>
-         <%= book.body %>
-     </td>
-     <td>
-         <% if book.favorited?(current_user,book) %>
-            <!--# 一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ-->
-            <%= link_to book_favorites_path(book), method: :delete do %>
-                <span style="color:red;">♥︎</span>
-            <% end %>
-        <% else %>
-            <!--# 一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ-->
-            <%= link_to book_favorites_path(book), method: :post do %>
-                <span>♡︎</span>
-            <% end %>
-        <% end %>
- <% end %>
-    </td>
-   </tr>
- </tbody>
-</table>
+           </tr>
+         </tbody>
+        </table>
     
 </div>
 </div>
