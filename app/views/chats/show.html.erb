@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+        <h2><%= @user.name %>さんとのチャット</h2>
+        <div>
+          <% if @chats.present? %>
+            <% @chats.each do |c| %>
+            <strong><%= c.message %></strong>
+        </div>
+        <div class="chat-hukidashi"><br>
+            <% end %>
+          <% end %>
+        </div>
+         <div class="posts">
+          <%= form_with model: @chat, data: {remote: true} do |f| %>
+           <%= f.text_field :message, placeholder: "メッセージを入力して下さい" , size: 70, class:"form-text-field" %>
+           <%= f.hidden_field :room_id %>
+           <%= f.submit "投稿",class: 'form-submit'%>
+          <% end %>
+         </div>
+        </div>
+    </div>
+</div>            

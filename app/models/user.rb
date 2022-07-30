@@ -16,6 +16,8 @@ class User < ApplicationRecord
    
    has_many :followings, through: :relationships, source: :followed
    has_many :followers, through: :reverse_of_relationships, source: :follower
+   has_many :user_rooms,dependent: :destroy
+   has_many :chats,dependent: :destroy
    
   def follow(user_id)
    relationships.create(followed_id: user_id)
@@ -28,9 +30,10 @@ class User < ApplicationRecord
   def following?(user)
    followings.include?(user)
   end
+  
+  
+  
 
-   
-   
    
  def get_profile_image(width, height)
   unless profile_image.attached?
